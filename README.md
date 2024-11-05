@@ -7,6 +7,7 @@ All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python
 - Metadata summary: ```metasum.py```
 - Setting number of cuts: ```setcut.py```
 - Sampling features including instances through SelectKBest: ```selectkbest.py```
+- Sample EDA: ```sampledesc.py```
 
 ## Decision Tree Classifier
 - ```Scripts/ML/Python/dtree.py```
