@@ -10,6 +10,7 @@
 │           ├── ./Data/Original/metadata/meta-dep.json
 │           └── ./Data/Original/metadata/meta-indep.json
 ├── ./file.txt
+├── ./LICENSE
 ├── ./Logs
 │   └── ./Logs/box
 │       └── ./Logs/box/75305-seltrain20num3each20.log
@@ -65,4 +66,4 @@
     ├── ./Structures/directory.txt
     └── ./Structures/file.txt
 
-22 directories, 44 files
+22 directories, 45 files
