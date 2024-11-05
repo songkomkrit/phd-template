@@ -21,17 +21,17 @@ All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python
   - ```cplex.trelim```: uncompressed tree memory limit (in MB)
   - ```cplex.nodefileind```: node storage file switch
     - 0 = No node file
-		- 1 = Node file in memory and compressed (default)
-	  - 2 = Node file on disk
-	  - 3 = Node file on disk and compressed
+    - 1 = Node file in memory and compressed (default)
+    - 2 = Node file on disk
+    - 3 = Node file on disk and compressed
   - ```cplex.status```: solution status
     - Used for exiting
-      - 1: CPX_STAT_OPTIMAL
-      - 101: CPXMIP_OPTIMAL
-      - 102: CPXMIP_OPTIMAL_TOL
-      - 111: CPXMIP_MEM_LIM_FEAS (Predefined tree memory limit is exceeded and a solution is feasible)
-      - 112: CPXMIP_MEM_LIM_INFEAS
+        - 1 = CPX_STAT_OPTIMAL
+        - 101 = CPXMIP_OPTIMAL
+        - 102 = CPXMIP_OPTIMAL_TOL
+        - 111 = CPXMIP_MEM_LIM_FEAS (Predefined tree memory limit is exceeded and a solution is feasible)
+        - 112 = CPXMIP_MEM_LIM_INFEAS
     - Not used for exiting in this work
-      - 11: CPX_STAT_ABORT_TIME_LIM (Accumulated computational time is already recorded in each iteration)
-      - 104: CPXMIP_SOL_LIM (All solutions with different objective values are recorded)
+        - 11: CPX_STAT_ABORT_TIME_LIM (Accumulated computational time is already recorded in each iteration)
+        - 104: CPXMIP_SOL_LIM (All solutions with different objective values are recorded)
 - Execution: ```oplrun -p box 2>&1 | tee <LOG_FILEPATH>```
