@@ -1,6 +1,6 @@
 # PhD Template
 
-## Preprocessing
+## Data Preprocessing
 All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python```.
 - Exploratory data analysis (EDA): ```describe.py```
 - Data encoding: ```convert.py```
