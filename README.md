@@ -32,6 +32,6 @@ All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python
         - 111 = CPXMIP_MEM_LIM_FEAS (Predefined tree memory limit is exceeded and a solution is feasible)
         - 112 = CPXMIP_MEM_LIM_INFEAS
     - Not used for exiting in this work
-        - 11: CPX_STAT_ABORT_TIME_LIM (Accumulated computational time is already recorded in each iteration)
-        - 104: CPXMIP_SOL_LIM (All solutions with different objective values are recorded)
+        - 11 = CPX_STAT_ABORT_TIME_LIM (Accumulated computational time is already recorded in each iteration)
+        - 104 = CPXMIP_SOL_LIM (All solutions with different objective values are recorded)
 - Execution: ```oplrun -p box 2>&1 | tee <LOG_FILEPATH>```
