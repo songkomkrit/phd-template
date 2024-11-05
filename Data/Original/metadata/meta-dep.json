@@ -1,0 +1,170 @@
+{
+	"NOW_COV": {
+		"label": "Currently covered by health insurance coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Any health insurance coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_PUB": {
+		"label": "Current public coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Public coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_PRIV": {
+		"label": "Current private coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Private coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_GRP": {
+		"label": "Any current employment-based coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Employment-based coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_DIR": {
+		"label": "Any current direct-purchase coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Direct-purchase coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_MCARE": {
+		"label": "Current Medicare coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Medicare coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},	
+	"NOW_MCAID": {
+		"label": "Current Medicaid, PCHIP, or other means-tested coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Medicaid or other means-tested coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_CAID": {
+		"label": "Current Medicaid coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Medicaid coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},	
+	"NOW_PCHIP": {
+		"label": "Current PCHIP coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "PCHIP coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},	
+	"NOW_OTHMT": {
+		"label": "Current other means-tested coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Other means-tested coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_MIL": {
+		"label": "Any current TRICARE coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "TRICARE coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_CHAMPVA": {
+		"label": "Current CHAMPVA coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "CHAMPVA coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_VACARE": {
+		"label": "Current VACARE coverage",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "VACARE coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	},
+	"NOW_IHSFLG": {
+		"label": "Current coverage through the Indian Health Service",
+		"universe": "All Persons",
+		"type": "Categorical",
+		"role": "Dependent",
+		"topic": "Health insurance",
+		"subtopic": "Indian Health Service coverage",
+		"values": {
+			"1": "Yes",
+			"2": "No"
+		}
+	}
+}

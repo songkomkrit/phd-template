@@ -1,0 +1,24 @@
+.
+├── Data
+│   └── Original
+│       ├── feather
+│       └── metadata
+│           └── full
+├── Logs
+│   └── box
+├── Projects
+│   └── box
+│       ├── input
+│       ├── log
+│       ├── output
+│       └── tmp
+├── Scripts
+│   ├── ML
+│   │   └── Python
+│   └── Preprocessing
+│       └── Python
+│           ├── cls
+│           └── module
+└── Structures
+
+22 directories

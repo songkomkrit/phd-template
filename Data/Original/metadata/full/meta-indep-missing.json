@@ -1,0 +1,378 @@
+{
+	"SPM_CapHouseSub": {
+		"label": "SPM unit's capped housing subsidy",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_CapWkCCXpns": {
+		"label": "SPM unit's capped work and child care expenses",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-999999": "Dollar amount"
+		}
+	},
+	"SPM_ChildcareXpns": {
+		"label": "SPM unit's child care expenses-not capped",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-999999": "Dollar amount"
+		}
+	},
+	"SPM_ChildSupPd": {
+		"label": "SPM unit's child support paid",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_EITC": {
+		"label": "SPM unit's Federal Earned Income Tax Credit",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_EngVal": {
+		"label": "SPM unit's energy subsidy",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-9999": "Dollar amount"
+		}
+	},
+	"SPM_FamType": {
+		"label": "SPM unit's family type",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Married couple family",
+			"2": "Cohabiting partner",
+			"3": "Male reference person",
+			"4": "Female reference person",
+			"5": "Unrelated individuals"
+		}
+	},
+	"SPM_FedTax": {
+		"label": "SPM unit's Federal tax",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"-999999-9999999": "Dollar amount"
+		}
+	},
+	"SPM_FedTaxBC": {
+		"label": "SPM unit's Federal tax before refundable tax credits",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"-999999-9999999": "Dollar amount"
+		}
+	},
+	"SPM_FICA": {
+		"label": "SPM unit's Federal Insurance Contributions Act and federal retirement contribution",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_Hage": {
+		"label": "Head of SPM unit's age",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"15-79": "15 - 79 years of age",
+			"80": "80 - 84 years of age",
+			"85": "85 years of age and greater"
+		}
+	},
+	"SPM_HHisp": {
+		"label": "Head of SPM unit is Hispanic",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Hispanic",
+			"0": "Not Hispanic"
+		}
+	},
+	"SPM_HMaritalStatus": {
+		"label": "Head of SPM unit's marital status",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Married - civilian spouse present",
+			"2": "Married - armed forces spouse present",
+			"3": "Married - spouse absent (excluding separated)",
+			"4": "Widowed",
+			"5": "Divorced",
+			"6": "Separated",
+			"7": "Never married"
+		}
+	},
+	"SPM_HRace": {
+		"label": "Head of SPM unit's race, not considering Hispanic",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "White alone",
+			"2": "Black alone",
+			"3": "Asian alone",
+			"4": "Other (American Indian, Alaska Native, Pacific Islander, Multiracial)"
+		}
+	},
+	"SPM_NumAdults": {
+		"label": "SPM unit's number of adults",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-20": "Number"
+		}
+	},
+	"SPM_NumKids": {
+		"label": "SPM unit's number of children",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-20": "Number"
+		}
+	},
+	"SPM_NumPer": {
+		"label": "SPM unit's number of persons",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-20": "Number"
+		}
+	},
+	"SPM_Poor": {
+		"label": "SPM poverty status",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "In poverty",
+			"0": "Not in poverty"
+		}
+	},
+	"SPM_PovThreshold": {
+		"label": "SPM unit's SPM poverty threshold",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_Resources": {
+		"label": "Total SPM resources for SPM unit",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"-999999-9999999": "Dollar amount"
+		}
+	},
+	"SPM_SchLunch": {
+		"label": "SPM unit's school lunch subsidy",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-9999": "Dollar amount"
+		}
+	},
+	"SPM_SNAPSub": {
+		"label": "SPM unit's Supplemental Nutrition Assistance Program (SNAP) subsidy",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_StTax": {
+		"label": "SPM unit's state tax",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"-9999-999999": "Dollar amount"
+		}
+	},
+	"SPM_TenMortStatus": {
+		"label": "SPM unit's tenure/mortgage status",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Owner with mortgage",
+			"2": "Owner with mortgage or rent-free",
+			"3": "Renter"
+		}
+	},
+	"SPM_Totval": {
+		"label": "SPM unit's cash income",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"-999999-9999999": "Dollar amount"
+		}
+	},
+	"SPM_wCohabit": {
+		"label": "SPM unit has cohabiting couple",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Has cohabiting couple",
+			"0": "No cohabiting couple"
+		}
+	},
+	"SPM_wFoster22": {
+		"label": "SPM unit has a foster child under 22 years old",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Has foster child under 22",
+			"0": "No foster child under 22"
+		}
+	},
+	"SPM_WICval": {
+		"label": "SPM unit's Women, Infants, and Children (WIC) subsidy",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-9999": "Dollar amount"
+		}
+	},
+	"SPM_WkXpns": {
+		"label": "SPM unit's work expenses-not capped",
+		"universe": "All persons",
+		"type": "Continuous",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"0-99999": "Dollar amount"
+		}
+	},
+	"SPM_wNewHead": {
+		"label": "SPM unit has a new head of household",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "New head of household",
+			"0": "No new head of household"
+		}
+	},
+	"SPM_wNewParent": {
+		"label": "SPM unit has a new parent",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "New parent",
+			"0": "No new parent"
+		}
+	},
+	"SPM_wUI_LT15": {
+		"label": "SPM unit has an unrelated individual under 15 years old",
+		"universe": "All persons",
+		"type": "Categorical",
+		"role": "Independent",
+		"topic": "Supplemental poverty measure",
+		"subtopic": "SPM unit characteristics",
+		"values": {
+			"1": "Has UI under 15",
+			"0": "No UI under 15"
+		}
+	}
+}

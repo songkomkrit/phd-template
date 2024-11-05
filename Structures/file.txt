@@ -1,0 +1,68 @@
+.
+├── ./Data
+│   └── ./Data/Original
+│       ├── ./Data/Original/feather
+│       │   └── ./Data/Original/feather/pppub20.feather
+│       └── ./Data/Original/metadata
+│           ├── ./Data/Original/metadata/full
+│           │   ├── ./Data/Original/metadata/full/meta-indep-full.json
+│           │   └── ./Data/Original/metadata/full/meta-indep-missing.json
+│           ├── ./Data/Original/metadata/meta-dep.json
+│           └── ./Data/Original/metadata/meta-indep.json
+├── ./file.txt
+├── ./Logs
+│   └── ./Logs/box
+│       └── ./Logs/box/75305-seltrain20num3each20.log
+├── ./Projects
+│   └── ./Projects/box
+│       ├── ./Projects/box/input
+│       │   ├── ./Projects/box/input/proc20co2ca2cutinfo.csv
+│       │   ├── ./Projects/box/input/proc20co3ca3cutinfo.csv
+│       │   ├── ./Projects/box/input/proc20enc.csv
+│       │   ├── ./Projects/box/input/selproc20num3co3ca3cutinfo.csv
+│       │   ├── ./Projects/box/input/selproc20num4co3ca3cutinfo.csv
+│       │   ├── ./Projects/box/input/selproc20num8co2ca2cutinfo.csv
+│       │   ├── ./Projects/box/input/seltrain20num3each20.csv
+│       │   ├── ./Projects/box/input/seltrain20num4each20.csv
+│       │   └── ./Projects/box/input/seltrain20num8each20.csv
+│       ├── ./Projects/box/log
+│       │   └── ./Projects/box/log/blank.log
+│       ├── ./Projects/box/mixed-boxes-alternative.mod
+│       ├── ./Projects/box/mixed-boxes-alternative.ops
+│       ├── ./Projects/box/output
+│       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-cutcat-full-pcont-3-mfullaltseltol-2-t-1440.csv
+│       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-cutcont-full-pcont-3-mfullaltseltol-2-t-1440.csv
+│       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-error-mfullaltseltol-2-t-1440.csv
+│       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-predict-instance-pcont-3-mfullaltseltol-2-t-1440.csv
+│       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-predict-region-pcont-3-mfullaltseltol-2-t-1440.csv
+│       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-select-var-int-pcont-3-mfullaltseltol-2-t-1440.csv
+│       │   └── ./Projects/box/output/75305-seltrain20num3each20-export-select-var-str-pcont-3-mfullaltseltol-2-t-1440.csv
+│       ├── ./Projects/box/p-mixed-cuts-alt-seltol.mod
+│       └── ./Projects/box/tmp
+│           └── ./Projects/box/tmp/current-engine.log
+├── ./README.md
+├── ./Scripts
+│   ├── ./Scripts/ML
+│   │   └── ./Scripts/ML/Python
+│   │       └── ./Scripts/ML/Python/dtree.py
+│   └── ./Scripts/Preprocessing
+│       └── ./Scripts/Preprocessing/Python
+│           ├── ./Scripts/Preprocessing/Python/cls
+│           │   ├── ./Scripts/Preprocessing/Python/cls/Data.py
+│           │   ├── ./Scripts/Preprocessing/Python/cls/Info.py
+│           │   └── ./Scripts/Preprocessing/Python/cls/ThesisExtension.py
+│           ├── ./Scripts/Preprocessing/Python/convert.py
+│           ├── ./Scripts/Preprocessing/Python/describe.py
+│           ├── ./Scripts/Preprocessing/Python/metasum.py
+│           ├── ./Scripts/Preprocessing/Python/module
+│           │   ├── ./Scripts/Preprocessing/Python/module/dataset.py
+│           │   ├── ./Scripts/Preprocessing/Python/module/eda.py
+│           │   ├── ./Scripts/Preprocessing/Python/module/metaencode.py
+│           │   └── ./Scripts/Preprocessing/Python/module/utility.py
+│           ├── ./Scripts/Preprocessing/Python/selectkbest.py
+│           └── ./Scripts/Preprocessing/Python/setcut.py
+└── ./Structures
+    ├── ./Structures/directory.txt
+    └── ./Structures/file.txt
+
+22 directories, 44 files
