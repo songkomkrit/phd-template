@@ -23,7 +23,7 @@ All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python
     - 0 = No node file
     - 1 = Node file in memory and compressed (default)
     - 2 = Node file on disk
-    - 3 = Node file on disk and compressed
+    - 3 = Node file on disk and compressed (used in this work)
   - ```cplex.status```: solution status
     - Used for exiting
         - 1 = CPX_STAT_OPTIMAL
