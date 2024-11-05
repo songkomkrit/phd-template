@@ -15,10 +15,10 @@ All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python
 - The most accurate box classifer is built by the CPLEX optimizer.
 - The OPL project locates at ```Projects```.
 - Important parameters
-  - ```cplex.intsollim```: MIP solution number limit
+  - ```cplex.intsollim```: MIP solution number limit (default: 9223372036800000000)
   - ```cplex.threads```: paralle threads (default: 0 implying up to 32 threads)
   - ```cplex.workmem```: working memory before compression and swap (in MB) (default: 2048)
-  - ```cplex.trelim```: uncompressed tree memory limit (in MB)
+  - ```cplex.trelim```: uncompressed tree memory limit (in MB) (default: 1e+75)
   - ```cplex.nodefileind```: node storage file switch
     - 0 = No node file
     - 1 = Node file in memory and compressed (default)
