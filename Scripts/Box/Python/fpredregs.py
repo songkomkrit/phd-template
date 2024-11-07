@@ -3,14 +3,14 @@ import shutil
 import csv
 import pandas as pd
 
-from module.utility import create_dir
+from module.xutil import create_dir
 from module.predregs import predregs
 
-# Predefined Directories
-ts = "75305" # Timestamp prefix
-data = "seltrain20num3each20" # Data name (no file extension)
+# Predefined directories
+ts = "75305" # timestamp prefix
+data = "seltrain20num3each20" # data name (no file extension)
 
-indir = "../../../Projects/box/output"
+indir = "../../../Projects/Box Classifiers/alternative/output"
 inerrfile = f"{ts}-{data}-export-error-mfullaltseltol-2-t-1440.csv"
 inselfile = f"{ts}-{data}-export-select-var-str-pcont-3-mfullaltseltol-2-t-1440.csv"
 inregfile = f"{ts}-{data}-export-predict-region-pcont-3-mfullaltseltol-2-t-1440.csv"
@@ -23,9 +23,13 @@ outregfile = f"{ts}-predregfin.csv"
 create_dir(outdir)
 
 # Import DataFrame iterators
-iterr = pd.read_csv(f"{indir}/{inerrfile}").itertuples()
-itsel = pd.read_csv(f"{indir}/{inselfile}").itertuples()
-itreg = pd.read_csv(f"{indir}/{inregfile}").itertuples()
+iterr = pd.read_csv(f"{indir}/{inerrfile}").itertuples() # classification errors
+itsel = pd.read_csv(f"{indir}/{inselfile}").itertuples() # selected string variables
+itreg = pd.read_csv(f"{indir}/{inregfile}").itertuples() # full decision regions
+
+# Recalculate decision regions and predictions
+# tsels: dictionary of selected variables
+# tpreds: dictionary of new predicted classes in all new regions
 tsels, tpreds = predregs(iterr, itsel, itreg, n_classes=5)
 
 # Examples

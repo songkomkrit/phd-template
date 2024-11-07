@@ -4,7 +4,7 @@ import numpy as np
 # Typecast object to integer NumPy array
 def tointnp(obj, intdtype=np.int16):
     '''
-        Usage: typecast object to integer NumPy array  (helper)
+        Usage: typecast object to integer NumPy array
         Required arguments:
             obj: iterable object
             intdtype: NumPy integer data type

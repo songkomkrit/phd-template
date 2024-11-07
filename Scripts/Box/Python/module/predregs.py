@@ -19,7 +19,7 @@ def predregs(iterr, itsel, itreg, n_classes, pdtype=np.int16, idtype=np.int8):
             idtype: data type of index (default: np.int8)
         Outputs:
             tsels: dictionary of selected variables
-            tpreds: dictionary of predicted classes in all decision regions
+            tpreds: dictionary of new predicted classes in all new decision regions
     '''
     
     csrow = next(itsel) # selected string variables (across all iterations)
@@ -50,7 +50,7 @@ def predregs(iterr, itsel, itreg, n_classes, pdtype=np.int16, idtype=np.int8):
                             'js': sidl}
 
         # New corresponding decision regions
-        sidx = np.array(sidl, dtype=idtype) - 1 # Index starts at 0
+        sidx = np.array(sidl, dtype=idtype) - 1 # index starts at 0
         pcutn = pcuto[sidx] # new cut numbers
         BN = np.prod(pcutn+1) # number of new regions     
         bns = calregs(pcuto, sidx) # new correspoding regions
