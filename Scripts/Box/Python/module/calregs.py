@@ -21,6 +21,7 @@ def hcalbn(bo, bnprev, idxn, pcuto, pocum, pncumx):
     # bo must be between 1 and np.prod(pcuto+1)-1
     bn = bnprev
     for jmax in range(len(pcuto)-1,-1,-1):
+        # bo (incremented by 1) in base representation has the last nonzero at digit jmax
         if bo%pocum[jmax] == 0:
             for j in range(jmax):
                 bn -= pcuto[j]*pncumx[idxn[j]]
