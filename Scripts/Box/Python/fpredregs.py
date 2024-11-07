@@ -10,7 +10,7 @@ from module.predregs import predregs
 ts = "75305" # timestamp prefix
 data = "seltrain20num3each20" # data name (no file extension)
 
-indir = "../../../Projects/Box Classifiers/alternative/output"
+indir = "../../../Projects/box/output"
 inerrfile = f"{ts}-{data}-export-error-mfullaltseltol-2-t-1440.csv"
 inselfile = f"{ts}-{data}-export-select-var-str-pcont-3-mfullaltseltol-2-t-1440.csv"
 inregfile = f"{ts}-{data}-export-predict-region-pcont-3-mfullaltseltol-2-t-1440.csv"
