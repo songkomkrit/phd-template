@@ -1,25 +1,36 @@
-import os
-import shutil
 import csv
 import pandas as pd
 
-from module.xutil import create_dir
+from module.xutil import create_dir, copy
 from module.predregs import predregs
 
-# Predefined directories
-ts = "75305" # timestamp prefix
+# Informational prefixes/postfixes
+ts = "75305" # last digits of timestamp
 data = "seltrain20num3each20" # data name (no file extension)
+inprefix = f"{ts}-{data}-export-" # input filename prefix
+inpostfix = "-mfullaltseltol-2-t-1440" # input filename postfix
 
-indir = "../../../Projects/box/output"
-inerrfile = f"{ts}-{data}-export-error-mfullaltseltol-2-t-1440.csv"
-inselfile = f"{ts}-{data}-export-select-var-str-pcont-3-mfullaltseltol-2-t-1440.csv"
-inregfile = f"{ts}-{data}-export-predict-region-pcont-3-mfullaltseltol-2-t-1440.csv"
+# Required inputs
+indir = "../../../Projects/box/output" # main directory
+inerrfile = f"{inprefix}error{inpostfix}.csv" # classification errors
+inselfile = f"{inprefix}select-var-str-pcont-3{inpostfix}.csv" # selected string variables
+inregfile = f"{inprefix}predict-region-pcont-3{inpostfix}.csv" # full decision regions
 
-outdir = f"../../../Outputs/Main/Box/{data}"
-outerrfile = f"{ts}-error.csv"
-outselfile = f"{ts}-selvarfin.csv"
-outregfile = f"{ts}-predregfin.csv"
+# Optional inputs
+incutcontfile = f"{inprefix}cutcont-full-pcont-3{inpostfix}.csv" # continuous cuts
+incutcatfile = f"{inprefix}cutcat-full-pcont-3{inpostfix}.csv" # categorical cuts
 
+# Required outputs
+outdir = f"../../../Outputs/Main/Box/{data}" # main directory
+outerrfile = f"{ts}-error.csv" # classification errors
+outselfile = f"{ts}-selvarfin.csv" # selected string variables
+outregfile = f"{ts}-predregfin.csv" # full decision regions
+
+# Optional outputs
+outcutcontfile = f"{ts}-cutcont.csv" # continuous cuts
+outcutcatfile = f"{ts}-cutcat.csv" # categorical cuts
+
+# Create main output directory (if not exist)
 create_dir(outdir)
 
 # Import DataFrame iterators
@@ -37,9 +48,10 @@ iter = 15
 print(f"\nSelected features (iteration {iter})\n{tsels[iter]}\n")
 print(f"Decision regions (iteration {iter})\n{tpreds[iter]}\n")
 
-# Export classification accuracies/errors
-shutil.copy2(f"{indir}/{inerrfile}", outdir) # preserve file metadata
-os.rename(f"{outdir}/{inerrfile}", f"{outdir}/{outerrfile}") # rename new file
+# Export non-edited information
+copy(f"{indir}/{inerrfile}", f"{outdir}/{outerrfile}") # classification errors
+copy(f"{indir}/{incutcontfile}", f"{outdir}/{outcutcontfile}") # continuous cuts
+copy(f"{indir}/{incutcatfile}", f"{outdir}/{outcutcatfile}") # categorical cuts
 
 # Export selected variables
 with open(f"{outdir}/{outselfile}", 'w', newline='') as file:
