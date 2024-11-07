@@ -36,3 +36,4 @@ All relevant Python scripts are in the directory ```Scripts/Preprocessing/Python
         - 11 = CPX_STAT_ABORT_TIME_LIM (Accumulated computational time is already recorded in each iteration)
         - 104 = CPXMIP_SOL_LIM (All solutions with different objective values are recorded)
 - Execution: ```oplrun -p box 2>&1 | tee <LOG_FILEPATH>```
+- To reorder the decision regions obtained from the OPL model and to find the complete sets of their predicted class labels, execute Python script file ```Scripts/Box/Python/fpredregs.py```
