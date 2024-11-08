@@ -29,7 +29,6 @@
 │       ├── ./Projects/box/log
 │       │   └── ./Projects/box/log/blank.log
 │       ├── ./Projects/box/mixed-boxes-alternative.mod
-│       ├── ./Projects/box/mixed-boxes-alternative.ops
 │       ├── ./Projects/box/output
 │       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-cutcat-full-pcont-3-mfullaltseltol-2-t-1440.csv
 │       │   ├── ./Projects/box/output/75305-seltrain20num3each20-export-cutcont-full-pcont-3-mfullaltseltol-2-t-1440.csv
@@ -75,4 +74,4 @@
     ├── ./Structures/directory.txt
     └── ./Structures/file.txt
 
-25 directories, 51 files
+25 directories, 50 files

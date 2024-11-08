@@ -4,12 +4,9 @@
     	
     <configs>
         		
-        <config default="true" name="alternative-default" category="opl">
+        <config default="true" name="box" category="opl">
             			
             <ref name="mixed-boxes-alternative.mod" type="model">
-			</ref>
-            			
-            <ref name="mixed-boxes-alternative.ops" type="setting">
 			</ref>
             		
         </config>

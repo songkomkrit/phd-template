@@ -14,10 +14,8 @@ def tointnp(obj, intdtype=np.int16):
     try:
         if obj.dtype == intdtype: return obj
     except:
-        try:
-            return np.array(obj, dtype=intdtype)
-        except:
-            return np.array(map(int, obj), dtype=intdtype)
+        try: return np.array(obj, dtype=intdtype)
+        except: return np.array(map(int, obj), dtype=intdtype)
 
 
 # Convert set/number in string format to Python set
@@ -30,10 +28,8 @@ def strtoset(setstr):
     '''
     
     strset = set(setstr.strip().strip('{ }'))
-    try:
-        strset.remove(' ') # for set of more than two elements
-    except:
-        pass
+    try: strset.remove(' ') # for set of more than two elements
+    except: pass
     numset = set(map(int, strset))
     
     return numset
