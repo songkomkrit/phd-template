@@ -41,7 +41,7 @@ class Data:
                         try:
                             if int(strval) <= 0:
                                 text = self.metadata[attr]['values'][strval]
-                                matches = re.search(pattern, text.replace(',', ' ').lower())
+                                matches = re.search(pattern, text.replace(',', ' '))
                                 if bool(matches):
                                     flag = True
                                     cont_nonpos += attr+"\n"

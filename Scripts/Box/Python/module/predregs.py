@@ -98,30 +98,24 @@ def predregs(iterr, itsel, itreg, itcont, itcat, n_classes, pdtype=np.int16, idt
             ccatrow = next(itcat)
         for jcur in (ssidl:=sorted(sidl)): # numerically sorted features selected
             cuts = scuts[jcur]['cuts'] # list of cuts along specific selected feature
-            try:
+            try: # iterate over full continuous cuts
                 while ccontrow.iter == erow.iter:
-                    if ccontrow.j < jcur: # seek before current feature
-                        ccontrow = next(itcont)
-                    elif ccontrow.j == jcur: # seek up to current feature
-                        cuts.append(ccontrow.bc) # continuous feature seen
-                        ccontrow = next(itcont)
-                    elif jcur == ssidl[-1]: # last selected feature
-                        ccontrow = next(itcont)
-                    else: # seek no more than current (except last) feature
-                        break           
+                    if ccontrow.j > jcur: # seek no more than current feature
+                        break
+                    else:
+                        if ccontrow.j == jcur: # at current selected feature
+                            cuts.append(ccontrow.bc) # continuous feature seen
+                        ccontrow = next(itcont) # update DataFrame iterator
             except StopIteration:
                 pass
-            try:
+            try: # iterate over full categorical cuts
                 while ccatrow.iter == erow.iter:
-                    if ccatrow.j < jcur: # seek before current feature
-                        ccatrow = next(itcat)
-                    elif ccatrow.j == jcur: # seek up to current feature
-                        cuts.append(ccatrow.v) # categorical feature seen
-                        ccatrow = next(itcat) 
-                    elif jcur == ssidl[-1]: # last selected feature
-                        ccatrow = next(itcat)
-                    else: # seek no more than current (except last) feature
+                    if ccatrow.j > jcur: # seek no more than current feature
                         break
+                    else:
+                        if ccatrow.j == jcur: # at current selected feature
+                            cuts.append(ccatrow.v) # categorical feature seen
+                        ccatrow = next(itcat) # update DataFrame iterator
             except StopIteration:
                 pass 
         

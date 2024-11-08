@@ -1,4 +1,5 @@
 import csv
+import re
 import pandas as pd
 
 from module.xutil import create_dir, copy, import_dict
@@ -6,7 +7,7 @@ from module.predregs import predregs
 
 
 # Parameters
-isreport = True # whether report is written
+isreport = True # whether reports are written
 
 # Informational prefixes/postfixes
 ts = "75305" # last digits of timestamp
@@ -23,9 +24,14 @@ incutcontfile = f"{inprefix}cutcont-full-pcont-3{inpostfix}.csv" # continuous cu
 incutcatfile = f"{inprefix}cutcat-full-pcont-3{inpostfix}.csv" # categorical cuts
 
 # Optional inputs
-if isreport: # report must be written
+if isreport: # reports must be written
     metadir = "../../../Data/Encoded/metadata" # metadata directory
     catmetafile = "meta-indep-cat-pppub20enc.json" # categorical metadata (after encoding) file
+    # Relabel case-insensitive NIU values for all selected categorical features
+    niudc = {
+        'SS_YN': "NIU (aged below 15)",
+        'PEMLR': "NIU (PEMLR)"
+    }
 
 # Required outputs
 outdir = f"../../../Outputs/Main/Box/{data}" # main output directory
@@ -36,8 +42,9 @@ outregfile = f"{ts}-predregfin.csv" # full decision regions
 outerrfile = f"{ts}-error.csv" # classification errors
 outcutcontfile = f"{ts}-cutcont.csv" # continuous cuts
 outcutcatfile = f"{ts}-cutcat.csv" # categorical cuts
-if isreport: # report must be written
-    outrepfile = f"{ts}-report.csv" # report
+if isreport: # reports must be written
+    outrepwdfile = f"{ts}-report-dup.csv" # report with duplicate entries
+    outrepndfile = f"{ts}-report-nondup.csv" # nonduplicate with nonduplicate entries
 
 # Create main output directory (if not exist)
 create_dir(outdir)
@@ -113,12 +120,28 @@ with open(f"{outdir}/{outregfile}", 'w', newline='') as file:
             })
 
 
-# Export final report
+# Export final reports (both duplicate and nonduplicate) (if specified)
 
-if isreport: # report must be written
+if isreport: # reports must be written
 
-    # Metadata (after encoding)
-    catmetadc = import_dict(jsonpath=f"{metadir}/{catmetafile}")
+    # New labels of selected categorical features (catvdc)
+    catmetadc = import_dict(jsonpath=f"{metadir}/{catmetafile}") # metadata for categorical features
+    catvars = set() # all selected categorical features (initialized)
+    pattern = r'(^|[^\w])(niu)([^\w]|$)' # regex to search for niu
+    pattern = re.compile(pattern, re.IGNORECASE)
+    for info in tsels.values():
+        for ind, attr in enumerate(info['variables']):
+            if info['types'][ind] == 'cat':
+                catvars.add(attr)
+    catvdc = {attr: catmetadc[attr]['values'] for attr in catvars} # labels of selected categorical features
+    for attr, valdc in catvdc.items():
+        for val, desc in valdc.items():
+            matches = re.search(pattern, desc.replace(',', ' '))
+            if bool(matches): # case-insensitive value label containing niu
+                try:
+                    catvdc[attr][val] = niudc[attr] # relabel
+                except KeyError: # new NIU label of current feature is missing
+                    pass
     
     # Classification errors and performance metrics
     efields = ['iter', 'error', 'accuracy', 'ms', 'acctmin', 'status', 'relgap']
@@ -138,7 +161,7 @@ if isreport: # report must be written
             else: # categorical feature (grouping allowed)
                 for gr, members in info['groups'].items():
                     for elem in members: # all members in a specific group
-                        desc = catmetadc[info['variable']]['values'][str(elem)]
+                        desc = catvdc[info['variable']][str(elem)]
                         dc = {
                             'iter': citer,
                             'j': j, 'variable': info['variable'], 'type': 'Categorical',
@@ -147,12 +170,30 @@ if isreport: # report must be written
                         grls.append(dc)
     dfg = pd.DataFrame(grls) # group dataframe
     
-    # Merge two dataframes: error/metric and group
-    dfrp = pd.merge(dfe, dfg) # report dataframe
+    # Report dataframe with duplicate entries (dfrp)
+    dfrp = pd.merge(dfe, dfg) # merge two dataframes: error/metric and group
 
-    # Export
-    dfrp.to_csv(f"{outdir}/{outrepfile}", header=True, index=False)
+    # Report dataframe with nonduplicate entries (dfn)
+    dfn = dfrp.copy(deep=True)
+    intcols = ['iter', 'status', 'j', 'group'] # integer columns
+    ndcols = [
+        ['iter', 'error', 'accuracy', 'ms', 'acctmin', 'status', 'relgap'],
+        ['j', 'variable', 'type'],
+        ['group']
+    ]
+    for i in range(len(ndcols),0,-1): # iterate over multilevel column lists with nonduplicate entries
+        ccols = [f for cols in ndcols[0:i] for f in cols]
+        dfn.loc[dfn[ccols].duplicated(), ccols] = pd.NA
+    for col in intcols:
+        dfn[col] = pd.array(dfn[col], dtype='Int16')
+    
+    # Export final reports
+    dfrp.to_csv(f"{outdir}/{outrepwdfile}", header=True, index=False) # with duplicate entries
+    dfn.to_csv(f"{outdir}/{outrepndfile}", sep=',', na_rep='', header=True, index=False) # with non-duplicate entries
 
 
-# Display example of final report
+# Display example of final report (with duplicate entries)
 print(f"{dfrp.head()}\n")
+
+# Display example of final report (with nonduplicate entries)
+print(f"{dfn.head()}\n")
