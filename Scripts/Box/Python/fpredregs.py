@@ -75,34 +75,42 @@ copy(f"{indir}/{incutcatfile}", f"{outdir}/{outcutcatfile}") # categorical cuts
 
 # Export selected variables, cuts and groups
 with open(f"{outdir}/{outselfile}", 'w', newline='') as file:
-    writer = csv.DictWriter(file,
-                            fieldnames = ['iter', 'jfin', 'j', 'var', 'type', 'p', 'cuts'])
+    writer = csv.DictWriter(
+        file,
+        fieldnames = ['iter', 'jfin', 'j', 'var', 'type', 'p', 'cuts', 'groups']
+    )
     writer.writeheader()
 for citer, info in tsels.items():
     cuts = [tcuts[citer][j]['cuts'] for j in info['js']]
     groups = [tcuts[citer][j]['groups'] for j in info['js']]
-    dfs = pd.DataFrame({'iter': citer,
-                        'jfin': range(1, len(info['js'])+1),
-                        'j': info['js'],
-                        'variable': info['variables'],
-                        'type': info['types'],
-                        'p': info['ps'],
-                        'cuts': cuts,
-                        'groups': groups})
+    dfs = pd.DataFrame({
+        'iter': citer,
+        'jfin': range(1, len(info['js'])+1),
+        'j': info['js'],
+        'variable': info['variables'],
+        'type': info['types'],
+        'p': info['ps'],
+        'cuts': cuts,
+        'groups': groups
+    })
     dfs.to_csv(f"{outdir}/{outselfile}", mode='a', header=False, index=False)
 
 
 # Export predicted classes in all decision regions
 with open(f"{outdir}/{outregfile}", 'w', newline='') as file:
-    writer = csv.DictWriter(file,
-                            fieldnames = ['iter', 'regfin', 'occfin', 'predfin'])
+    writer = csv.DictWriter(
+        file,
+        fieldnames = ['iter', 'regfin', 'occfin', 'predfin']
+    )
     writer.writeheader()   
     for citer, preds in tpreds.items():
         for reg, info in preds.items():
-            writer.writerow({'iter': citer,
-                             'regfin': reg,
-                             'occfin': 1 if info['occupy'] else 0,
-                             'predfin': str(info['classes'])})
+            writer.writerow({
+            'iter': citer,
+            'regfin': reg,
+            'occfin': 1 if info['occupy'] else 0,
+            'predfin': str(info['classes'])
+            })
 
 
 # Export final report
@@ -121,17 +129,21 @@ if isreport: # report must be written
     for citer, scuts in tcuts.items():
         for j, info in scuts.items(): # cuts along all selected feature
             if info['type'] == 'cont': # continuous feature (no grouping: group = -1)
-                dc = {'iter': citer,
-                      'j': j, 'variable': info['variable'], 'type': 'Continuous',
-                      'group': -1, 'member': info['cuts'], 'desc': 'NA'}
+                dc = {
+                    'iter': citer,
+                    'j': j, 'variable': info['variable'], 'type': 'Continuous',
+                    'group': -1, 'member': info['cuts'], 'desc': 'NA'
+                }
                 grls.append(dc)
             else: # categorical feature (grouping allowed)
                 for gr, members in info['groups'].items():
                     for elem in members: # all members in a specific group
                         desc = catmetadc[info['variable']]['values'][str(elem)]
-                        dc = {'iter': citer,
-                              'j': j, 'variable': info['variable'], 'type': 'Categorical',
-                              'group': gr, 'member': elem, 'desc': desc}
+                        dc = {
+                            'iter': citer,
+                            'j': j, 'variable': info['variable'], 'type': 'Categorical',
+                            'group': gr, 'member': elem, 'desc': desc
+                        }
                         grls.append(dc)
     dfg = pd.DataFrame(grls) # group dataframe
     

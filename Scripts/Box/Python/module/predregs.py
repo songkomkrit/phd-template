@@ -53,26 +53,29 @@ def predregs(iterr, itsel, itreg, itcont, itcat, n_classes, pdtype=np.int16, idt
                     svars.append(csrow.variable) # selected feature
                     stypes.append(csrow.type) # type of selected feature
                     # Initialize cuts along specific selected feature
-                    scuts[csrow.jnew] = {'variable': csrow.variable,
-                                         'type': csrow.type,
-                                         'cuts': list(),
-                                         'groups': dict()}
+                    scuts[csrow.jnew] = {
+                        'variable': csrow.variable,
+                        'type': csrow.type,
+                        'cuts': list(),
+                        'groups': dict()
+                    }
                 # Update DataFrame iterator of selected string variables
                 csrow = next(itsel)
         except StopIteration:
             pass
         sidx = np.array(sidl, dtype=idtype) - 1 # index starts at 0
         pcutn = pcuto[sidx] # new cut numbers
-        tsels[erow.iter] = {'variables': svars, 'types': stypes,
-                            'js': sidl, 'ps': pcutn.tolist()}
+        tsels[erow.iter] = {
+            'variables': svars, 'types': stypes,
+            'js': sidl, 'ps': pcutn.tolist()
+        }
 
         # New corresponding decision regions
         BN = np.prod(pcutn+1) # number of new regions     
         bns = calregs(pcuto, sidx) # new correspoding regions
 
         # Predicted classes in all new decision regions
-        preds = {k: {'occupy': False,
-                     'classes': set()} for k in range(BN)}
+        preds = {k: {'occupy': False, 'classes': set()} for k in range(BN)}
         try:
             while crrow.iter == erow.iter:
                 if crrow.occupy == 1: # for old occupied region
