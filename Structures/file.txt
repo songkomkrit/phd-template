@@ -44,12 +44,18 @@
 ├── ./Scripts
 │   ├── ./Scripts/Box
 │   │   └── ./Scripts/Box/Python
-│   │       ├── ./Scripts/Box/Python/fpredregs.py
+│   │       ├── ./Scripts/Box/Python/finalbox.py
 │   │       └── ./Scripts/Box/Python/module
-│   │           ├── ./Scripts/Box/Python/module/calregs.py
-│   │           ├── ./Scripts/Box/Python/module/predregs.py
-│   │           ├── ./Scripts/Box/Python/module/typecast.py
-│   │           └── ./Scripts/Box/Python/module/xutil.py
+│   │           ├── ./Scripts/Box/Python/module/model
+│   │           │   ├── ./Scripts/Box/Python/module/model/findcorr.py
+│   │           │   ├── ./Scripts/Box/Python/module/model/findcregs.py
+│   │           │   ├── ./Scripts/Box/Python/module/model/findcuts.py
+│   │           │   ├── ./Scripts/Box/Python/module/model/findsels.py
+│   │           │   └── ./Scripts/Box/Python/module/model/findtregs.py
+│   │           └── ./Scripts/Box/Python/module/operation
+│   │               ├── ./Scripts/Box/Python/module/operation/calregs.py
+│   │               ├── ./Scripts/Box/Python/module/operation/typecast.py
+│   │               └── ./Scripts/Box/Python/module/operation/xutil.py
 │   ├── ./Scripts/ML
 │   │   └── ./Scripts/ML/Python
 │   │       └── ./Scripts/ML/Python/dtree.py
@@ -74,4 +80,4 @@
     ├── ./Structures/directory.txt
     └── ./Structures/file.txt
 
-25 directories, 50 files
+27 directories, 54 files

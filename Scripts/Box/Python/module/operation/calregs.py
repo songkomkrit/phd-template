@@ -1,7 +1,6 @@
-# Per-Iteration Operations
 import numpy as np
 
-from module.typecast import tointnp
+from module.operation.typecast import tointnp
 
 
 # Calculate new corresponding region label (helper)
@@ -61,16 +60,16 @@ def calregs(pcuto, sidx, pdtype=np.int16, idtype=np.int8, rdtype=np.int16):
             pcuto: old cut numbers
             sidx: selected feature indexes (in order)
         Optional arguments:
-            pdtype: data type of cut number (default: np.int16)
-            idtype: data type of index (default: np.int8)
-            rdtype: data type of region number (default: np.int16)
+            pdtype: NumPy data type of cut number (default: np.int16)
+            idtype: NumPy data type of index (default: np.int8)
+            rdtype: NumPy data type of region number (default: np.int16)
         Outputs: new correspoding regions
     '''
     
     # Typecasting
     pcuto = tointnp(pcuto, intdtype=pdtype)
     sidx = tointnp(sidx, intdtype=idtype)
-
+    
     # Basic calculation
     dimo = pcuto.size # old dimension
     dimn = sidx.size # new dimension
