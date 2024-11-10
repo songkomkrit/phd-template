@@ -1,6 +1,8 @@
 import os
 import shutil
 import json
+import math
+import numpy as np
 import pandas as pd
 
 # Create directory (if not exist)
@@ -36,6 +38,32 @@ def copy(srcpath, destpath):
     
     # Rename copied file to correct destination filename
     os.rename(f"{destdir}/{srcfile}", destpath)
+
+
+# Round up or down number to decimal places
+def round_num(number, decimals, direction):
+    '''
+        Usage: round up or down number to decimal places
+        Required arguments:
+            number: number to be rounded
+            decimals: number of decimal places to round to
+            direction: either up or down ('up', 'down')
+        Outputs:
+            rounded number to specified decimal places
+    '''
+    
+    if isinstance(decimals, int) or isinstance(decimals. np.integer):
+        if decimals >= 0:
+            if direction == 'up':
+                return math.ceil(number*10**decimals)/10**decimals
+            elif direction == 'down':
+                return math.floor(number*10**decimals)/10**decimals
+            else:
+                raise TypeError("Direction can be either up or down")   
+        else:
+            raise TypeError("Number of decimal places to round to must be nonnegative")
+    else:
+        raise TypeError("Number of decimal places must be an integer")
 
 
 # Find maximum value of dictionary and key set
@@ -89,6 +117,42 @@ def itvpos(x, splits, closed='neither'):
 
     # Last interval
     return i + 1
+
+
+# Return left and right endpoints of rounded interval
+def itvtopts(itv, decimals=2, extend=True):
+    '''
+        Usage: return left and right endpoints of rounded interval
+        Required arguments:
+            itv: Pandas interval to be rounded
+        Optional arguments:
+            decimals: number of decimal places to round to (default: 2)
+            extend: whether extend (true) or shrink (default) interval (default: True)
+        Outputs:
+            lpt: left endpoint of rounded interval
+            rpt: right endpoint of rounded interval
+    '''
+           
+    if isinstance(itv, pd._libs.interval.Interval):
+        if extend:
+            ldirect, rdirect = 'down', 'up'
+        else:
+            ldirect, rdirect = 'up', 'down'
+        
+        if np.isinf(itv.left):
+            lpt = itv.left
+        else:
+            lpt = round_num(itv.left, decimals, ldirect)
+        
+        if np.isinf(itv.right):
+            rpt = itv.right
+        else:
+            rpt = round_num(itv.right, decimals, rdirect)
+        
+        return lpt, rpt
+    
+    else:
+        raise TypeError("Only Pandas intervals are allowed")
 
 
 # Import dictionary from JSON file

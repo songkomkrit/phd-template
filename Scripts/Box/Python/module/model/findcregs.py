@@ -5,7 +5,7 @@ from module.operation.calregs import calregs
 
 
 # Calculate new cplex decision regions and predictions (partially correct)
-def findcregs(tsels, itpred, pcuto, idtype=np.int8, pdtype=np.int16):
+def findcregs(tsels, itpred, pcuto, idtype=np.int16, pdtype=np.int16):
     '''
         Usage: calculate new cplex decision regions and predictions (per file)
         Required arguments:
@@ -14,7 +14,7 @@ def findcregs(tsels, itpred, pcuto, idtype=np.int8, pdtype=np.int16):
             pcuto: old cut numbers
         Optional arguments:
             pdtype: NumPy data type of cut number (default: np.int16)
-            idtype: NumPy data type of index (default: np.int8)
+            idtype: NumPy data type of index (default: np.int16)
         Outputs:
             tcregs: dictionary of new cplex decision regions and their predicted classes
     '''
@@ -60,6 +60,6 @@ def findcregs(tsels, itpred, pcuto, idtype=np.int8, pdtype=np.int16):
         for creg in cregs.values():
             if not creg['lclasses']:
                 creg['lclasses'] = [classes] # predict only one of the entire set
-                nlcinst = [0] # no instance reported by cplex in remaining new regions
+                nlcinst = [0] # no instance reported by cplex in the rest of new regions
     
     return tcregs

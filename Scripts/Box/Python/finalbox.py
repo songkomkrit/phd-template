@@ -3,7 +3,8 @@ import re
 import pandas as pd
 
 from module.operation.xutil import *
-from module.operation.typecast import settostr, itvtostr
+from module.operation.typecast import settostr, itvtostr, itvtodesc
+from module.operation.calregs import calregs
 from module.model.findsels import findsels
 from module.model.findcuts import findcuts
 from module.model.findtregs import findtregs
@@ -36,7 +37,7 @@ incutcatfile = f"{inprefix}cutcat-full-pcont-3{inpostfix}.csv" # categorical cut
 # Optional inputs
 if issreport: # reports of feature selection must be written
     metadir = "../../../Data/Encoded/metadata" # metadata directory
-    catmetafile = "meta-indep-cat-pppub20enc.json" # categorical metadata (after encoding) file
+    metafile = "meta-indep-pppub20enc.json" # metadata (after encoding) file
     # Relabel case-insensitive NIU values for all selected categorical features
     niudc = {'SS_YN': "NIU (aged below 15)", 'PEMLR': "NIU"}
 if isrreport: # reports of detailed decision regions must be written
@@ -86,18 +87,18 @@ tcorr, ccorr = findcorr(ttregs, tcregs) # true/cplex correctness
 dfen = pd.DataFrame({
     'iter': tcorr.keys(), # iteration that selects feature
     'taccuracy': [info['correct']*100/len(df) for info in tcorr.values()], # true accuracies
-    'caccuracy': [info['correct']*100/len(df) for info in ccorr.values()] # recalculated cplex accuracies
+    'caccuracy': [info['correct']*100/len(df) for info in ccorr.values()], # recalculated cplex accuracies
+    'terror': [len(df) - info['correct'] for info in tcorr.values()], # true errors
+    'cerror': [len(df) - info['correct'] for info in ccorr.values()] # recalculated cplex errors
 })
-dfen['terror'] = 100 - dfen['taccuracy'] # true errors
-dfen['cerror'] = 100 - dfen['caccuracy'] # recalculated cplex errors
 dfen = pd.merge(dfen, dfe, how='outer')
 dfen.rename(columns = {
     'error': 'rerror', # reported cplex errors
     'accuracy': 'raccuracy' # reported cplex accuracies
 }, inplace=True)
 cols = dfen.columns.tolist()
-cols = cols[0:1] + cols[5:5+len(pcuto)] + cols[1:3] + cols[-6:-5] + cols[3:5] + cols[-7:-6] + cols[-5:]
-dfen = dfen[cols] # rearranged columns
+new_cols = cols[0:1] + cols[5:5+len(pcuto)] + cols[1:3] + cols[-6:-5] + cols[3:5] + cols[-7:-6] + cols[-5:]
+dfen = dfen[new_cols] # rearranged columns
 dfen['ms'] = dfen['ms']/60000 # convert milliseconds to minutes
 dfen = dfen.rename(columns={'ms':'minute'})
 
@@ -146,7 +147,7 @@ for citer, info in tsels.items():
             groups.append(jgrs)
         else: # categorical feature
             groups.append(tcuts[citer][j]['groups'])
-    dfs = pd.DataFrame({
+    dfstmp = pd.DataFrame({
         'iter': citer,
         'jfin': range(1, len(info['js'])+1), # 1, 2, ...
         'j': info['js'], # j in cplex model
@@ -156,7 +157,8 @@ for citer, info in tsels.items():
         'cuts': cuts,
         'groups': groups
     })
-    dfs.to_csv(f"{outdir}/{outselfile}", mode='a', header=False, index=False)
+    dfstmp.to_csv(f"{outdir}/{outselfile}", mode='a', header=False, index=False)
+del dfstmp
 
 # Export predicted classes and number of instances in all decision regions
 with open(f"{outdir}/{outregfile}", 'w', newline='') as file:
@@ -185,7 +187,7 @@ with open(f"{outdir}/{outregfile}", 'w', newline='') as file:
 if issreport: # reports of feature selection must be written
 
     # New labels of selected categorical features (catvdc)
-    catmetadc = import_dict(jsonpath=f"{metadir}/{catmetafile}") # metadata for categorical features
+    metadc = import_dict(jsonpath=f"{metadir}/{metafile}") # metadata after encoding
     catvars = set() # all selected categorical features (initialized)
     pattern = r'(^|[^\w])(niu)([^\w]|$)' # regex to search for niu
     pattern = re.compile(pattern, re.IGNORECASE)
@@ -193,7 +195,7 @@ if issreport: # reports of feature selection must be written
         for ind, attr in enumerate(info['variables']):
             if info['types'][ind] == 'cat':
                 catvars.add(attr)
-    catvdc = {attr: catmetadc[attr]['values'] for attr in catvars} # labels of selected categorical features
+    catvdc = {attr: metadc[attr]['values'] for attr in catvars} # labels of selected categorical features
     for attr, valdc in catvdc.items():
         for val, desc in valdc.items():
             matches = re.search(pattern, desc.replace(',', ' '))
@@ -210,21 +212,31 @@ if issreport: # reports of feature selection must be written
     grls = list() # list of all member groups across all features and iterations
     for citer, scuts in tcuts.items():
         for j, info in scuts.items(): # cuts along all selected feature
+            vartype = 'Continuous' if info['type']=='cat' else 'Categorical'
             if info['type'] == 'cont': # continuous feature (groups not displayed for convenience)
-                dc = {
-                    'iter': citer,
-                    'j': j, 'variable': info['variable'], 'type': 'Continuous',
-                    'group': pd.NA, 'member': info['cuts'], 'desc': pd.NA
-                }
-                grls.append(dc)
+                for gr, member in info['groups'].items():
+                    dc = {
+                        'iter': citer,
+                        'j': j, 'variable': info['variable'],
+                        'type': 'Continuous',
+                        'label': metadc[info['variable']]['label'],
+                        'group': gr,
+                        'member': itvtostr(member),
+                        'desc': itvtodesc(member, decimals=0, extend=False).capitalize()
+                    }
+                    grls.append(dc)
             else: # categorical feature (groups displayed)
-                for gr, members in info['groups'].items():
-                    for elem in members: # all members in a specific group
+                for gr, member in info['groups'].items():
+                    for elem in member: # all elements in group member
                         desc = catvdc[info['variable']][str(elem)]
                         dc = {
                             'iter': citer,
-                            'j': j, 'variable': info['variable'], 'type': 'Categorical',
-                            'group': gr, 'member': elem, 'desc': desc
+                            'j': j, 'variable': info['variable'],
+                            'type': 'Categorical',
+                            'label': metadc[info['variable']]['label'],
+                            'group': gr,
+                            'member': elem,
+                            'desc': desc
                         }
                         grls.append(dc)
     dfg = pd.DataFrame(grls) # group dataframe
@@ -237,12 +249,12 @@ if issreport: # reports of feature selection must be written
         dfsrp,
         ndcols=[
             ['iter', 'taccuracy', 'minute', 'acctmin', 'status'],
-            ['j', 'variable', 'type'],
+            ['j', 'variable', 'type', 'label'],
             ['group']
         ],
         intcols=['iter', 'status', 'j', 'group'] # integer columns
     )
-    
+
     # Export final reports of feature selection
     dfsrp.to_csv( # with duplicate entries
         f"{outdir}/{outsrepwdfile}",
@@ -269,9 +281,9 @@ if isrreport: # reports of detailed decision regions must be written
         writer = csv.DictWriter(
             file,
             fieldnames = [
-                'iter', 'reg',
+                'iter',
                 'ordvars', 'strvars',
-                'ordreg', 'crossreg',
+                'reg', 'ordreg', 'crossreg',
                 'tpreds', 'strtpreds',
                 'ninst'
             ])
@@ -293,9 +305,9 @@ if isrreport: # reports of detailed decision regions must be written
                         raise TypeError("Cut intervals can be either Pandas intervals or sets")
                 writer.writerow({
                     'iter': citer,
-                    'reg': b,
                     'ordvars': f"({','.join([str(j) for j in js])})", # ordered pair of selected features
                     'strvars': strvars, # string of selected features
+                    'reg': b,
                     'ordreg': f"({','.join([str(q) for q in qs])})", # ordered pair of numerical region
                     'crossreg': ' x '.join(grls), # cross product of features in string format
                     'tpreds': ','.join([str(v) for v in treg['classes']]), # true predicted classes
@@ -318,3 +330,59 @@ if isrreport: # reports of detailed decision regions must be written
 
 print(f"{dfrrp.head()}\n") # detailed decision regions (with duplicate entries)
 print(f"{dfrrpn.head()}\n")  # detailed decision regions (with nonduplicate entries)
+
+
+# Reexamination of CPLEX Results
+
+# Additional output files
+outexffile = f"{ts}-exam-full.csv" # full cplex reexamination
+outexdfile = f"{ts}-exam-diff.csv" # difference in new decision regions
+outexnfile = f"{ts}-exam-diffnum.csv" # number of difference
+
+# Convert full coordinate to position in new feature space
+def tonpos(citer, coord):
+    ls = list()
+    for j in tsels[citer]['js']:
+        if tcuts[citer][j]['type'] == 'cont':
+            ls.append(itvpos(coord[j-1], tcuts[citer][j]['cuts']))
+        else:
+            ls.append(tcuts[citer][j]['cuts'][coord[j-1]])
+    return tuple(ls)
+
+# Compute new numerical region from given position to new feature space
+def tonreg(citer, pos):
+    pcutn = np.array(tsels[citer]['ps'], dtype=np.int16)
+    pncum = np.cumprod(np.append([1], pcutn[0:-1]+1), dtype=np.int16)
+    return np.dot(pncum, pos)
+
+dfpn = dfp.copy() # copy of individual result of cplex prediction
+dfpn = dfpn[dfpn['iter'].isin(tsels.keys())] # exclude iterations of no feature selection
+
+nregdc = dict() # array of new numerical regions for each iteration
+for citer, info in tsels.items():
+    nregdc[citer] = calregs(pcuto=pcuto,sidx=np.array(info['js'])-1)
+dfpn['creg'] = dfpn.apply(lambda x: nregdc[x.iter][x.region], axis=1) # new region based on cplex result
+dfpn['tpred'] = dfpn.apply(lambda x: ttregs[x.iter][x.creg]['classes'], axis=1) # true predicted class
+
+dfc = pd.merge(df, dfpn, how='right', left_on=df.index+1, right_on='id', suffixes=('', '_pn')) # include instance
+del dfc['class_pn']
+cols = dfc.columns.tolist()
+new_cols = cols[len(pcuto)+1:len(pcuto)+3] + cols[0:len(pcuto)+1] + cols[-4:]
+dfc = dfc[new_cols]
+dfc = dfc.rename(columns={'region': 'rreg', 'predict': 'rpred'})
+
+dfc['coord'] = dfc.iloc[:,2:len(pcuto)+2].apply(lambda x: tuple(x), axis=1) # full original coordinate
+dfc['tpos'] = dfc.apply(lambda x: tonpos(x.iter, x.coord), axis=1) # true position in new feature space
+dfc['treg'] = dfc.apply(lambda x: tonreg(x.iter, x.tpos), axis=1) # true decision region
+
+
+dfcd = dfc[dfc['creg'] != dfc['treg']] # new cplex region differs from new true region
+dfcn = dfcd.groupby('iter').size().reset_index(name='dnum') # number of difference
+
+print(f"{dfcn}\n") # display number of difference in region recalculation
+print(f"{dfcd}\n") # display difference in new regions
+
+# Export cplex reexamination results
+dfc.to_csv(f"{outdir}/{outexffile}", header=True, index=False) # full cplex reexamination
+dfcd.to_csv(f"{outdir}/{outexdfile}", header=True, index=False) # difference in new decision regions
+dfcn.to_csv(f"{outdir}/{outexnfile}", header=True, index=False) # difference number

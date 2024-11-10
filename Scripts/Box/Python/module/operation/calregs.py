@@ -1,7 +1,5 @@
 import numpy as np
 
-from module.operation.typecast import tointnp
-
 
 # Calculate new corresponding region label (helper)
 def hcalbn(bo, bnprev, idxn, pcuto, pocum, pncumx):
@@ -53,7 +51,7 @@ def hcalregs(BO, idxn, pcuto, pocum, pncumx):
 
 
 # Calculate new corresponding decision regions (main)
-def calregs(pcuto, sidx, pdtype=np.int16, idtype=np.int8, rdtype=np.int16):
+def calregs(pcuto, sidx, pdtype=np.int16, idtype=np.int16, rdtype=np.int16):
     '''
         Usage: calculate new corresponding decision regions (main)
         Required arguments:
@@ -61,14 +59,14 @@ def calregs(pcuto, sidx, pdtype=np.int16, idtype=np.int8, rdtype=np.int16):
             sidx: selected feature indexes (in order)
         Optional arguments:
             pdtype: NumPy data type of cut number (default: np.int16)
-            idtype: NumPy data type of index (default: np.int8)
+            idtype: NumPy data type of index (default: np.int16)
             rdtype: NumPy data type of region number (default: np.int16)
         Outputs: new correspoding regions
     '''
     
     # Typecasting
-    pcuto = tointnp(pcuto, intdtype=pdtype)
-    sidx = tointnp(sidx, intdtype=idtype)
+    pcuto = np.array(pcuto, dtype=pdtype)
+    sidx = np.array(sidx, dtype=idtype)
     
     # Basic calculation
     dimo = pcuto.size # old dimension

@@ -65,7 +65,14 @@ df_count_info = count_info(df_proc_info)
 # Exported Results
 df_enc.to_feather(f"{feather_encdir}/{dataset_encname}.feather")
 df_enc.to_csv(f"{csv_encdir}/{dataset_encname}.csv", index=False)
-export_json(extract_dict_cat(indep_dict_enc), f"{meta_encdir}/meta-indep-cat-{dataset_encname}.json")
+export_json(
+    indep_dict_enc,
+    f"{meta_encdir}/meta-indep-{dataset_encname}.json"
+)
+export_json(
+    extract_dict_cat(indep_dict_enc),
+    f"{meta_extra_encdir}/meta-indep-cat-{dataset_encname}.json"
+)
 
 df_proc_enc.to_csv(f"{csv_procdir}/{dataset_procname}.csv", header=True, index=False)
 
