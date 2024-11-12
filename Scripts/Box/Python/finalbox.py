@@ -358,7 +358,7 @@ def tonreg(citer, pos):
 dfpn = dfp.copy() # copy of individual result of cplex prediction
 dfpn = dfpn[dfpn['iter'].isin(tsels.keys())] # exclude iterations of no feature selection
 
-nregdc = dict() # array of new numerical regions for each iteration
+nregdc = dict() # new numerical regions in all iterations
 for citer, info in tsels.items():
     nregdc[citer] = calregs(pcuto=pcuto,sidx=np.array(info['js'])-1)
 dfpn['creg'] = dfpn.apply(lambda x: nregdc[x.iter][x.region], axis=1) # new region based on cplex result

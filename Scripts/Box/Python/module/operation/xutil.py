@@ -108,7 +108,7 @@ def itvpos(x, splits, closed='neither'):
         for s in splits:
             if x == s:
                 raise Exception(f"Open intervals are chosen but input value {x} is at split value {s}")
-        closed = 'right' # Now it is safe to extend to (_, s], (s, _]
+        closed = 'right' # now safe to be extended to (_, s], (s, _]
 
     if closed == 'right': # (_, s], (s, _]
         for i, s in enumerate(splits):
