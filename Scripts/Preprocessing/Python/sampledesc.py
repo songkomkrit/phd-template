@@ -17,7 +17,7 @@ dataset_name = "seltrain20num3each20"
 
 # Predefined Directories
 meta_dir = "../../../Data/Original/metadata"
-csv_dir = "../../../Samples/selproc20/train"
+csv_dir = "../../../Samples/cplex"
 
 output_dir = f"../../../Outputs/Main/EDA/{dataset_name}"
 log_dir = f"../../../Logs/samples"

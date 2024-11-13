@@ -41,6 +41,14 @@
 │       └── ./Projects/box/tmp
 │           └── ./Projects/box/tmp/current-engine.log
 ├── ./README.md
+├── ./Samples
+│   └── ./Samples/cplex
+│       ├── ./Samples/cplex/selproc20num3co3ca3cutinfo.csv
+│       ├── ./Samples/cplex/selproc20num4co3ca3cutinfo.csv
+│       ├── ./Samples/cplex/selproc20num8co2ca2cutinfo.csv
+│       ├── ./Samples/cplex/seltrain20num3each20.csv
+│       ├── ./Samples/cplex/seltrain20num4each20.csv
+│       └── ./Samples/cplex/seltrain20num8each20.csv
 ├── ./Scripts
 │   ├── ./Scripts/Box
 │   │   └── ./Scripts/Box/Python
@@ -80,4 +88,4 @@
     ├── ./Structures/directory.txt
     └── ./Structures/file.txt
 
-27 directories, 54 files
+29 directories, 60 files

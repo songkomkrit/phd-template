@@ -1,6 +1,5 @@
 import pandas as pd
 from functools import partial
-from sklearn.datasets import load_iris
 from sklearn.feature_selection import mutual_info_classif, SelectKBest
 
 from module.utility import create_dir
@@ -16,7 +15,7 @@ train_name = "seltrain20"
 test_name = "seltest20"
 
 # Predefined Directories
-sample_dir = "../../../Samples"
+sample_dir = "../../../Samples/random"
 sel_dir = f"{sample_dir}/{data_selname}"
 
 data_dir = f"{sel_dir}/data"
@@ -74,7 +73,9 @@ for sel_num in sel_num_ls:
     print(f"{df_selfeat}\n")
 
     # Train-test split
-    df_seltrain = df_seldata.groupby('class', group_keys=False).apply(lambda x: x.sample(train_eachclass_num))
+    df_seltrain = df_seldata.groupby('class', group_keys=False).apply(
+        lambda x: x.sample(train_eachclass_num)
+    )
     df_seltest = df_seldata.drop(df_seltrain.index)
     
     # Exported results
