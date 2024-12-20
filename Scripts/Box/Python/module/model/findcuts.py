@@ -61,7 +61,7 @@ def findcuts(tsels, itcont, itcat, intvclosed='neither', intvsubtype='float32'):
         # Groups
         pcutdc = dict(zip(tsels[citer]['js'], tsels[citer]['ps'])) # cut numbers along selected features
         for j, info in tcuts[citer].items():
-            pnum = pcutdc[j] # number of cuts current selected feature
+            pnum = pcutdc[j] # number of cuts on current selected feature
             cuts = info['cuts']
             if info['type'] == 'cont': # continuous feature
                 excuts = [-np.inf] + cuts + [np.inf]

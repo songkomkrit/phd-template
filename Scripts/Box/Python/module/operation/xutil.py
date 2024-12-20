@@ -52,7 +52,7 @@ def round_num(number, decimals, direction):
             rounded number to specified decimal places
     '''
     
-    if isinstance(decimals, int) or isinstance(decimals. np.integer):
+    if isinstance(decimals, int) or isinstance(decimals, np.integer):
         if decimals >= 0:
             if direction == 'up':
                 return math.ceil(number*10**decimals)/10**decimals
