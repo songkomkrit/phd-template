@@ -11,7 +11,7 @@ def hcalbn(bo, bnprev, idxn, pcuto, pocum, pncumx):
             idxn: new feature indexes
             pcuto: old cut numbers
             pocum: cumulative number of box regions across old features
-            pncumx: cumulative number of extrended box regions across new features
+            pncumx: cumulative number of extended box regions across new features
         Outputs: corresponding region label
     '''
     
@@ -37,7 +37,7 @@ def hcalregs(BO, idxn, pcuto, pocum, pncumx):
             idxn: new feature indexes
             pcuto: old cut numbers
             pocum: cumulative number of box regions across old features
-            pncumx: cumulative number of extrended box regions across new features
+            pncumx: cumulative number of extended box regions across new features
         Outputs: corresponding region label
     '''
     
@@ -61,7 +61,7 @@ def calregs(pcuto, sidx, pdtype=np.int16, idtype=np.int16, rdtype=np.int16):
             pdtype: NumPy data type of cut number (default: np.int16)
             idtype: NumPy data type of index (default: np.int16)
             rdtype: NumPy data type of region number (default: np.int16)
-        Outputs: new correspoding regions
+        Outputs: new corresponding regions
     '''
     
     # Typecasting
@@ -85,7 +85,7 @@ def calregs(pcuto, sidx, pdtype=np.int16, idtype=np.int16, rdtype=np.int16):
     pncum = np.cumprod(np.append([1], pcutn[0:-1]+1), dtype=rdtype) # new
     pncumx = np.concatenate((pncum, np.zeros(dimo-dimn, dtype=rdtype))) # new and extended
     
-    # New correspoding regions (helper function called)
+    # New corresponding regions (helper function called)
     bns = np.array(hcalregs(BO, idxn, pcuto, pocum, pncumx), dtype=rdtype)
 
     # Output

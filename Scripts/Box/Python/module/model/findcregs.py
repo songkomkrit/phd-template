@@ -34,7 +34,7 @@ def findcregs(tsels, itpred, pcuto, idtype=np.int16, pdtype=np.int16):
                     pcutn = np.array(tsels[citer]['ps'], dtype=pdtype)
                     sidx = np.array(tsels[citer]['js'], dtype=idtype) - 1 # index starts at 0
                     BN = np.prod(pcutn+1) # number of new regions     
-                    bns = calregs(pcuto, sidx) # new correspoding regions
+                    bns = calregs(pcuto, sidx) # new corresponding regions
                     tcregs[citer] = {
                         b: {
                             'lclasses': list(), # list of cplex predicted class set
