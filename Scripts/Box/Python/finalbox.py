@@ -25,8 +25,8 @@ inprefix = f"{ts}-{data}-export-" # input filename prefix
 inpostfix = "-mfullaltseltol-2-t-1440" # input filename postfix
 
 # Required inputs
-datdir = "../../../Projects/box/input" # directory of training instances (cplex inputs)
-indir = "../../../Projects/box/output" # main input directory (cplex results)
+datdir = "../../../Projects/Box Classifiers/alternative/input" # directory of training instances (cplex inputs)
+indir = "../../../Projects/Box Classifiers/alternative/output" # main input directory (cplex results)
 datfile = f"{data}.csv" # training dataset with target variable
 datpredfile = f"{inprefix}predict-instance-pcont-3{inpostfix}.csv" # individual result of cplex prediction
 inerrfile = f"{inprefix}error{inpostfix}.csv" # classification errors and performance metrics
@@ -164,8 +164,10 @@ del dfstmp
 with open(f"{outdir}/{outregfile}", 'w', newline='') as file:
     writer = csv.DictWriter(
         file,
-        fieldnames = ['iter', 'reg', 'ninst', 'tpred', 'cpred',
-                      'tcorr', 'ccorr', 'ncinst']
+        fieldnames = [
+            'iter', 'reg', 'ninst', 'tpred', 'cpred',
+            'tcorr', 'ccorr', 'ncinst'
+        ]
     )
     writer.writeheader()   
     for citer, tregs in ttregs.items():
@@ -362,7 +364,7 @@ nregdc = dict() # new numerical regions in all iterations
 for citer, info in tsels.items():
     nregdc[citer] = calregs(pcuto=pcuto,sidx=np.array(info['js'])-1)
 dfpn['creg'] = dfpn.apply(lambda x: nregdc[x.iter][x.region], axis=1) # new region based on cplex result
-dfpn['tpred'] = dfpn.apply(lambda x: ttregs[x.iter][x.creg]['classes'], axis=1) # true predicted class
+dfpn['cpred'] = dfpn.apply(lambda x: ttregs[x.iter][x.creg]['classes'], axis=1) # CPLEX predicted class
 
 dfc = pd.merge(df, dfpn, how='right', left_on=df.index+1, right_on='id', suffixes=('', '_pn')) # include instance
 del dfc['class_pn']
@@ -374,6 +376,7 @@ dfc = dfc.rename(columns={'region': 'rreg', 'predict': 'rpred'})
 dfc['coord'] = dfc.iloc[:,2:len(pcuto)+2].apply(lambda x: tuple(x), axis=1) # full original coordinate
 dfc['tpos'] = dfc.apply(lambda x: tonpos(x.iter, x.coord), axis=1) # true position in new feature space
 dfc['treg'] = dfc.apply(lambda x: tonreg(x.iter, x.tpos), axis=1) # true decision region
+dfc['tpred'] = dfc.apply(lambda x: ttregs[x.iter][x.treg]['classes'], axis=1) # true predicted class
 
 
 dfcd = dfc[dfc['creg'] != dfc['treg']] # new cplex region differs from new true region
