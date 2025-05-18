@@ -1,3 +1,4 @@
+import re
 import numpy as np
 import pandas as pd
 
@@ -13,10 +14,8 @@ def strtoset(setstr):
         Outputs: corresponding set
     '''
     
-    strset = set(setstr.strip().strip('{ }'))
-    try: strset.remove(' ') # for set of more than two elements
-    except: pass
-    numset = set(map(int, strset))
+    elems = re.findall(r'[^{},;\s]+', setstr)
+    numset = set(map(int, elems))
     
     return numset
 

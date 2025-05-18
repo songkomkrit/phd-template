@@ -3,7 +3,7 @@ import re
 import pandas as pd
 
 from module.operation.xutil import *
-from module.operation.typecast import settostr, itvtostr, itvtodesc
+from module.operation.typecast import *
 from module.operation.calregs import calregs
 from module.model.findsels import findsels
 from module.model.findcuts import findcuts
@@ -165,19 +165,21 @@ with open(f"{outdir}/{outregfile}", 'w', newline='') as file:
     writer = csv.DictWriter(
         file,
         fieldnames = [
-            'iter', 'reg', 'ninst', 'tpred', 'cpred',
+            'iter', 'reg', 'ninst', 'tpred', 'lrpreds',
             'tcorr', 'ccorr', 'ncinst'
         ]
     )
-    writer.writeheader()   
+    writer.writeheader()
     for citer, tregs in ttregs.items():
         for b, treg in tregs.items():
+            # List of predicted classes reported by cplex in string format
+            lrpreds = settostr(map(settostr, tcregs[citer][b]['lclasses']), left='[', right=']')
             writer.writerow({
                 'iter': citer,
                 'reg': b,
                 'ninst': treg['ninst'], # number of instances
                 'tpred': settostr(treg['classes']), # true predicted class
-                'cpred': ','.join([settostr(st) for st in tcregs[citer][b]['lclasses']]), # cplex predicted class
+                'lrpreds': lrpreds,
                 'tcorr': tcorr[citer]['detail'][b], # true correctness
                 'ccorr': ccorr[citer]['detail'][b], # cplex correctness
                 'ncinst': treg['ncinst'] # targets and number of member instances
@@ -312,8 +314,8 @@ if isrreport: # reports of detailed decision regions must be written
                     'reg': b,
                     'ordreg': f"({','.join([str(q) for q in qs])})", # ordered pair of numerical region
                     'crossreg': ' x '.join(grls), # cross product of features in string format
-                    'tpreds': ','.join([str(v) for v in treg['classes']]), # true predicted classes
-                    'strtpreds': ', '.join([clabels[v] for v in treg['classes']]), # true predicted classes
+                    'tpreds': ','.join([str(v) for v in treg['classes']]), # true predicted numerical classes
+                    'strtpreds': ', '.join([clabels[v] for v in treg['classes']]), # true predicted class labels
                     'ninst': treg['ninst'] # number of training instances in region
                 })
                 for ind in range(len(ps)): # increment base representation of region for next for loop
@@ -364,7 +366,7 @@ nregdc = dict() # new numerical regions in all iterations
 for citer, info in tsels.items():
     nregdc[citer] = calregs(pcuto=pcuto,sidx=np.array(info['js'])-1)
 dfpn['creg'] = dfpn.apply(lambda x: nregdc[x.iter][x.region], axis=1) # new region based on cplex result
-dfpn['cpred'] = dfpn.apply(lambda x: ttregs[x.iter][x.creg]['classes'], axis=1) # CPLEX predicted class
+dfpn['cpred'] = dfpn.apply(lambda x: ttregs[x.iter][x.creg]['classes'], axis=1) # cplex predicted class
 
 dfc = pd.merge(df, dfpn, how='right', left_on=df.index+1, right_on='id', suffixes=('', '_pn')) # include instance
 del dfc['class_pn']
@@ -372,12 +374,12 @@ cols = dfc.columns.tolist()
 new_cols = cols[len(pcuto)+1:len(pcuto)+3] + cols[0:len(pcuto)+1] + cols[-4:]
 dfc = dfc[new_cols]
 dfc = dfc.rename(columns={'region': 'rreg', 'predict': 'rpred'})
+dfc['rpred'] = dfc['rpred'].apply(strtoset)
 
-dfc['coord'] = dfc.iloc[:,2:len(pcuto)+2].apply(lambda x: tuple(x), axis=1) # full original coordinate
+dfc['coord'] = dfc.iloc[:,2:len(pcuto)+2].apply(tuple, axis=1) # full original coordinate
 dfc['tpos'] = dfc.apply(lambda x: tonpos(x.iter, x.coord), axis=1) # true position in new feature space
 dfc['treg'] = dfc.apply(lambda x: tonreg(x.iter, x.tpos), axis=1) # true decision region
 dfc['tpred'] = dfc.apply(lambda x: ttregs[x.iter][x.treg]['classes'], axis=1) # true predicted class
-
 
 dfcd = dfc[dfc['creg'] != dfc['treg']] # new cplex region differs from new true region
 dfcn = dfcd.groupby('iter').size().reset_index(name='dnum') # number of difference
