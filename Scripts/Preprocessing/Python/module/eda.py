@@ -62,9 +62,11 @@ def crosstab(df, indep_dict, cont_bins, plot, output_dir, log_filepath, backup_d
         
         if plot:
             barplot = crosstb.plot.bar()
-            barplot.legend(title='(GRP,DIR,PUB)',
-                          bbox_to_anchor=(1,1.02),
-                          loc='upper left')
+            barplot.legend(
+                title='(GRP,DIR,PUB)',
+                bbox_to_anchor=(1,1.02),
+                loc='upper left'
+            )
             plt.title(val['label'])
             plt.xlabel(key)
             plt.ylabel('Frequency')

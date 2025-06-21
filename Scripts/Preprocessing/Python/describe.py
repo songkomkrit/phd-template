@@ -7,7 +7,7 @@ from module.eda import *
 from module.dataset import *
 from cls.ThesisExtension import *
 
-texlive_binpath = '/usr/local/texlive/2024/bin/x86_64-linux'
+texlive_binpath = "/usr/local/texlive/2024/bin/x86_64-linux"
 os.environ['PATH'] += os.pathsep + texlive_binpath
 
 pd.set_option('display.max_columns', None)
@@ -16,8 +16,10 @@ warnings.filterwarnings('ignore')
 
 # Given Information
 dataset_name = "pppub20"
+sas_url = ""
 
 # Predefined Directories
+sas_dir = "../../../../Datasets"
 meta_dir = "../../../Data/Original/metadata"
 feather_dir = "../../../Data/Original/feather"
 csv_dir = "../../../Data/Original/csv"
@@ -36,7 +38,7 @@ dep_attrs = ['GRP', 'DIR', 'PUB']
 print()
 describe_var(indep_dict)
 print()
-df = import_dataset(dataset_name=dataset_name, feather_dir=feather_dir)
+df = import_dataset(dataset_name=dataset_name, feather_dir=feather_dir, sas_dir=sas_dir, sas_url=sas_url)
 print()
 dep_features = ['class_orig', 'code_orig', 'code', 'class']
 acpt_types = {'category', 'int16', 'int32', 'int8', 'uint16', 'uint32', 'uint8'}
