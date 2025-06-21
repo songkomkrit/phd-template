@@ -7,9 +7,6 @@ from module.eda import *
 from module.dataset import *
 from cls.ThesisExtension import *
 
-texlive_binpath = "/usr/local/texlive/2024/bin/x86_64-linux"
-os.environ['PATH'] += os.pathsep + texlive_binpath
-
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
 warnings.filterwarnings('ignore')

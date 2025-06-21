@@ -73,7 +73,7 @@ class ThesisExtension:
     def recode(self):
         self.dataset['code'] =  self.dataset['code_orig'].apply(
             lambda v: 'NY_' if re.match('(NY)', v) 
-            else 'Y1Y' if re.match(r'^Y(?:\w*Y)', v)    # Raw string to prevent invalid escape sequence '\w'
+            else 'Y1Y' if re.match(r'^Y(?:\w*Y)', v)    # raw string to prevent invalid escape sequence '\w'
             else v
         ).astype('category')
         self.dataset['class'] = self.dataset[['class_orig', 'code']].apply(

@@ -42,22 +42,6 @@ def crosstab(df, indep_dict, cont_bins, plot, output_dir, log_filepath, backup_d
         
         print(f"Code: Employment-based plan (GRP) | Direct-purchase plan (DIR) | Public health insurance (PUB)")
         print(crosstb)
-        '''
-        dir_crosstb = f"{dir_main}/cross-{cont_bins}"
-        create_dir(dir_crosstb)
-        export_dataset(
-            crosstb,
-            file_dir=f"{dir_crosstb}/feather", dataset_name=f"{fname_main}-cross",
-            format='feather', info=False,
-            backup_dir=backup_dir
-        )
-        export_dataset(
-            crosstb,
-            file_dir=f"{dir_crosstb}/csv", dataset_name=f"{fname_main}-cross",
-            format='csv', info=False,
-            backup_dir=backup_dir
-        )
-        '''
         print("\n")
         
         if plot:

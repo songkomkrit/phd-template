@@ -30,7 +30,7 @@ class Data:
         return cat_change[0:-1]
     
     def encodecont(self):
-        pattern = r'(^|[^\w])(niu|universe)([^\w]|$)'   # Raw string to prevent invalid escape sequence '\w'
+        pattern = r'(^|[^\w])(niu|universe)([^\w]|$)'   # raw string to prevent invalid escape sequence '\w'
         pattern = re.compile(pattern, re.IGNORECASE)
         cont_nonpos = ""
         for attr in self.metadata.keys():
